@@ -6,6 +6,9 @@ from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
 from gensim.models import LdaModel
+nltk.download('punkt')
+nltk.download('stopwords')
+nltk.download('wordnet')
 
 # =========================
 # PAGE CONFIG
