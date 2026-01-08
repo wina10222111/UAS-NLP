@@ -54,23 +54,28 @@ def preprocess(text):
 # =========================
 # LOAD RESOURCE
 # =========================
-import os
-
 @st.cache_resource
 def load_resources():
+    import os, pickle, gensim
+
     base_dir = os.path.dirname(os.path.dirname(__file__))
 
-    with open(os.path.join(base_dir, "dataset", "roblox_dictionary.pkl"), "rb") as f:
-        dictionary = pickle.load(f)
+    try:
+        with open(os.path.join(base_dir, "dataset", "roblox_dictionary.pkl"), "rb") as f:
+            dictionary = pickle.load(f)
 
-    with open(os.path.join(base_dir, "dataset", "roblox_corpus.pkl"), "rb") as f:
-        corpus = pickle.load(f)
+        with open(os.path.join(base_dir, "dataset", "roblox_corpus.pkl"), "rb") as f:
+            corpus = pickle.load(f)
 
-    lda_model = gensim.models.LdaModel.load(
-        os.path.join(base_dir, "dataset", "lda_bow_model")
-    )
+        lda_model = gensim.models.LdaModel.load(
+            os.path.join(base_dir, "dataset", "lda_bow_model")
+        )
 
-    return dictionary, corpus, lda_model
+        return dictionary, corpus, lda_model
+
+    except Exception as e:
+        return None
+
 
 
 
