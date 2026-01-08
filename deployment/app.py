@@ -71,7 +71,7 @@ def load_resources():
             os.path.join(base_dir, "dataset", "lda_bow_model")
         )
 
-        return dictionary, corpus, lda_model
+        return dictionary, corpus, lda_model = load_resources()
 
     except Exception as e:
         return None
