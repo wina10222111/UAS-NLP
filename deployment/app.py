@@ -54,10 +54,10 @@ def preprocess(text):
 # =========================
 # LOAD RESOURCE
 # =========================
+import os
+
 @st.cache_resource
 def load_resources():
-    import os, pickle, gensim
-
     base_dir = os.path.dirname(os.path.dirname(__file__))
 
     try:
@@ -67,14 +67,27 @@ def load_resources():
         with open(os.path.join(base_dir, "dataset", "roblox_corpus.pkl"), "rb") as f:
             corpus = pickle.load(f)
 
-        lda_model = gensim.models.LdaModel.load(
+        lda_model = LdaModel.load(
             os.path.join(base_dir, "dataset", "lda_bow_model")
         )
 
-        return dictionary, corpus, lda_model = load_resources()
+        return dictionary, corpus, lda_model
 
     except Exception as e:
+        st.error(f"Gagal memuat model: {e}")
         return None
+
+
+# =========================
+# LOAD MODEL BEFORE UI
+# =========================
+resources = load_resources()
+
+if resources is None:
+    st.stop()
+
+dictionary, corpus, lda_model = resources
+
 
 
 
